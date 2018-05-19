@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>~MIANJI-1_Canvas</title>
+<!-- write your code here -->
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="~MIANJI-1_Canvas.js"></script>
+<script>
+var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+var shapes=[],letterNum=0;
+function init() {
+	canvas = document.getElementById("canvas");
+	handleComplete();
+}
+function handleComplete() {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	exportRoot = new lib.MIANJI1_Canvas();
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.enableMouseOver();
+
+	shapes=[exportRoot.pointA,exportRoot.pointB,exportRoot.pointC,exportRoot.pointD ,exportRoot.pointE];
+	exportRoot.A.visible=false;
+	exportRoot.B.visible=false;
+	exportRoot.C.visible=false;
+	exportRoot.D.visible=false;
+	exportRoot.E.visible=false;
+
+	setShapes();
+	exportRoot.instance.addEventListener('click',function(){
+		for (i = 0; i < shapes.length; i++) {
+
+			var shape = shapes[i];
+			shape.move=true;
+			shape.homeY = shape.homeYy;
+			shape.homeX = shape.homeXx;
+			shape.y = shape.homeY;
+			shape.x = shape.homeX;
+		}
+		letterNum=0;
+		exportRoot.gotoAndPlay(0);
+	});
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		createjs.Ticker.setFPS(lib.properties.fps);
+		createjs.Ticker.addEventListener("tick", stage);
+	}
+
+	fnStartAnimation();
+}
+function setShapes() {
+	var i,shape;
+	var l = shapes.length;
+
+	for (i = 0; i < l; i++) {
+		shape = shapes[i];
+		shape.key=i;
+		shape.move=true;
+		shape.homeY = shape.y;
+		shape.homeX = shape.x;
+		shape.homeYy = shape.y;
+		shape.homeXx = shape.x;
+		shape.y = shape.homeY;
+		shape.x = shape.homeX;
+
+		(function (num){
+			shape.addEventListener("mousedown",function(e){
+				if(!shapes[num].move){
+				return
+				}
+				startDrag(num)
+			});
+		})(i);
+
+	}
+}
+function startDrag(num) {
+	var shape = shapes[num];
+	console.log(num);
+
+	stage.setChildIndex(shape, stage.getNumChildren() - 1);
+	stage.addEventListener('stagemousemove', function(e) {
+		shape.x = stage.mouseX;
+		shape.y = stage.mouseY;
+
+	});
+	stage.addEventListener('stagemouseup', function(e) {
+		stage.removeAllEventListeners();
+		var ptA = exportRoot.A;
+		var ptB = exportRoot.B;
+		var ptC = exportRoot.C;
+		var ptD = exportRoot.D;
+		var ptE = exportRoot.E;
+//		console.log(exportRoot.A.x+'*******'+exportRoot.A.y);
+//		console.log(stage.mouseX+'*********'+stage.mouseY);
+		if(shape.key==0){
+			checkPosition(shape,ptA)
+
+		}else if(shape.key==1){
+			checkPosition(shape,ptB)
+
+		}else if(shape.key==2){
+			checkPosition(shape,ptC)
+
+		}else if(shape.key==3){
+			checkPosition(shape,ptD)
+
+		}else if(shape.key==4){
+			checkPosition(shape,ptE)
+
+		}
+
+		checkGame();
+
+	});
+}
+
+function checkPosition(shape,pt){
+	if(stage.mouseX>pt.x-2.5 &&stage.mouseX<pt.x+2.5 &&stage.mouseY>pt.y-2.5 &&stage.mouseY<pt.y+2.5){
+
+		shape.move=false;
+		letterNum++;
+		createjs.Tween.get(shape).to({
+			x: pt.x,
+			y: pt.y
+		}, 200, createjs.Ease.quadOut);
+	}else{
+		createjs.Tween.get(shape).to({
+			x: shape.homeX,
+			y: shape.homeY
+		}, 200, createjs.Ease.quadOut);
+	}
+}
+	function checkGame(){
+		console.log(letterNum);
+		if(letterNum>=5){
+			exportRoot.gotoAndPlay(3);
+
+		}
+	}
+
+</script>
+<!-- write your code here -->
+</head>
+<body onload="init();" style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:220px; height:220px">
+		<canvas id="canvas" width="220" height="220" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+
+	</div>
+</body>
+</html>
