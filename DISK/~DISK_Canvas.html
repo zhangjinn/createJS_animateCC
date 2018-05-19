@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>~DISK_Canvas</title>
+	<style>
+		#animation_container input{
+			width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none
+		}
+		#animation_container input[disabled]{opacity:1;background: #fff}
+	</style>
+<!-- write your code here -->
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="../../JS/jquery-1.4.2.min.js"></script>
+<script src="~DISK_Canvas.js"></script>
+<script>
+var canvas, stage, exportRoot,fnStartAnimation;
+var W1,W2,W3,W4,P1,P2,P3,shapes = [],leftFishNum= 0,p1_Box=[],p2_Box=[],p3_Box=[],value1,value2,value3,shapeMove=true;
+var P1X,P1Y,P1W,P1H,P2X,P2Y,P2W,P2H,P3X,P3Y,P3W,P3H;
+var ipt1,ipt2,ipt3,ipt4,ipt5,ipt6,ipt7,ipt8,ipt9,ipt10,ipt11,ipt12,ipt13,ipt14,ipt15,ipt16,ipt17;
+
+
+function init() {
+	canvas = document.getElementById("canvas");
+	handleComplete();
+}
+function handleComplete() {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	exportRoot = new lib.DISK_Canvas();
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	createjs.Touch.enable(stage);
+	stage.enableMouseOver();
+	P1=exportRoot.p1;
+	P2=exportRoot.p2;
+	P3=exportRoot.p3;
+
+	 P1X=P1.x;
+	 P1Y=P2Y=P3Y=P1.y+4;
+	 P2X=P2.x;
+	 P3X=P3.x;
+	P1W=P2W=P3W=25.8/2;//----------根据旋转点判定
+	P1H=P2H=P3H=9.8;
+	/*-------------------获取小球-------------*/
+	for (var i = 1; i <= 4; i++) {
+		shapes.push(eval("exportRoot.w"+i));
+	}
+	console.log(shapes);
+	setShapes();
+
+ ipt1=document.getElementById('ipt1');
+ ipt2=document.getElementById('ipt2');
+ ipt3=document.getElementById('ipt3');
+ ipt4=document.getElementById('ipt4');
+ ipt5=document.getElementById('ipt5');
+ ipt6=document.getElementById('ipt6');
+ ipt7=document.getElementById('ipt7');
+ ipt8=document.getElementById('ipt8');
+ ipt9=document.getElementById('ipt9');
+ ipt10=document.getElementById('ipt10');
+ ipt11=document.getElementById('ipt11');
+ ipt12=document.getElementById('ipt12');
+ ipt13=document.getElementById('ipt13');
+ ipt14=document.getElementById('ipt14');
+ ipt15=document.getElementById('ipt15');
+ ipt16=document.getElementById('ipt16');
+ ipt17=document.getElementById('ipt17');
+
+	for (i = 1; i < 18; i++) {
+		(function (num){
+			document.getElementById('ipt'+num).onkeyup=function(){
+				checkAnswer(this)
+			}
+		})(i);
+	}
+
+	function checkAnswer(obj){
+
+		if(obj==ipt1){
+			if(obj.value==value1){
+				obj.disabled=true;
+				obj.blur();
+				ipt2.disabled=false;
+				ipt2.style.display='block';
+				ipt2.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt2){
+			if(obj.value==value2){
+				obj.disabled=true;
+				obj.blur();
+				ipt3.disabled=false;
+				ipt3.style.display='block';
+				ipt3.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt3){
+			if(obj.value==value3){
+				obj.disabled=true;
+				obj.blur();
+				exportRoot.gotoAndPlay(4);
+				ipt4.disabled=false;
+				ipt4.style.display='block';
+				ipt4.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt4){
+			if(obj.value==value1){
+				obj.disabled=true;
+				obj.blur();
+
+				ipt5.disabled=false;
+				ipt5.style.display='block';
+				ipt5.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt5){
+			if(obj.value==value2){
+				obj.disabled=true;
+				obj.blur();
+
+				ipt6.disabled=false;
+				ipt6.style.display='block';
+				ipt6.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt6){
+			if(obj.value==value3){
+				obj.disabled=true;
+				obj.blur();
+				exportRoot.gotoAndPlay(5);
+				ipt7.disabled=false;
+				ipt7.style.display='block';
+				ipt7.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt7){
+			if(obj.value>=1 &&obj.value<=3){
+				obj.disabled=true;
+				obj.blur();
+				ipt8.disabled=false;
+				ipt8.style.display='block';
+				ipt8.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt8){
+			var sum= Number(ipt7.value)+Number(obj.value);
+			if(sum==4){
+				obj.disabled=true;
+				obj.blur();
+				if(ipt7.value>=obj.value ){
+					exportRoot.too.gotoAndPlay(11);
+					ipt9.disabled=false;
+					ipt9.style.display='block';
+					ipt9.focus();
+				}else{
+					exportRoot.too.gotoAndPlay(20);
+					exportRoot.too.p33p34.alpha=0;
+					ipt11.disabled=false;
+					ipt11.style.display='block';
+					ipt11.focus();
+				}
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt9){
+			if(ipt7.value>2){
+				if(obj.value>=1 &&obj.value<=2){
+					obj.disabled=true;
+					obj.blur();
+					ipt10.disabled=false;
+					ipt10.style.display='block';
+					ipt10.focus();
+				}else{
+					obj.value="";
+					obj.focus();
+				}
+			}else if(ipt7.value<=2){
+				if(obj.value==1){
+					obj.disabled=true;
+					obj.blur();
+					ipt10.disabled=false;
+					ipt10.style.display='block';
+					ipt10.focus();
+				}else{
+					obj.value="";
+					obj.focus();
+				}
+			}
+
+
+		}else if(obj==ipt10){
+			var sum1= Number(ipt9.value)+Number(obj.value);
+			if(obj.value>=1 &&obj.value<=2 &&sum1==ipt7.value){
+				obj.disabled=true;
+				obj.blur();
+				exportRoot.gotoAndPlay(6);
+				ipt13.disabled=false;
+				ipt13.style.display='block';
+				ipt13.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt11){
+			if(obj.value>=1 &&obj.value<=2){
+				obj.disabled=true;
+				obj.blur();
+				ipt12.disabled=false;
+				ipt12.style.display='block';
+				ipt12.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt12){
+			var sum2= Number(ipt11.value)+Number(obj.value);
+			if(obj.value>=1 &&obj.value<=2 &&sum2==ipt8.value){
+				obj.disabled=true;
+				obj.blur();
+				exportRoot.gotoAndPlay(6);
+				ipt13.disabled=false;
+				ipt13.style.display='block';
+				ipt13.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt13){
+
+			if(obj.value==ipt7.value || obj.value==ipt8.value){
+				obj.disabled=true;
+				obj.blur();
+
+				ipt14.disabled=false;
+				ipt14.style.display='block';
+				ipt14.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt14){
+
+			if((ipt13.value==ipt7.value &&obj.value==ipt8.value)||(ipt13.value==ipt8.value &&obj.value==ipt7.value)){
+				obj.disabled=true;
+				obj.blur();
+
+				ipt15.disabled=false;
+				ipt15.style.display='block';
+				ipt15.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+
+		}else if(obj==ipt15){
+
+			if(obj.value>=1 &&obj.value<=2){
+				obj.disabled=true;
+				obj.blur();
+				ipt16.disabled=false;
+				ipt16.style.display='block';
+				ipt16.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt16){
+
+			if(obj.value>=1 &&obj.value<=2 &&(Number(obj.value)+Number(ipt15.value))<4){
+				obj.disabled=true;
+				obj.blur();
+				ipt17.disabled=false;
+				ipt17.style.display='block';
+				ipt17.focus();
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}else if(obj==ipt17){
+
+			if(obj.value>=1 &&obj.value<=2 &&(Number(obj.value)+Number(ipt15.value)+Number(ipt16.value))==4){
+				obj.disabled=true;
+				obj.blur();
+				exportRoot.gotoAndPlay(7);
+			}else{
+				obj.value="";
+				obj.focus();
+			}
+		}
+	}
+/*--------------------------动画重播-----------------------*/
+	exportRoot.instance.addEventListener('click',function(){
+		for(var i=1;i<18;i++){
+			document.getElementById('ipt'+i).style.display='none';
+			document.getElementById('ipt'+i).value=""
+		}
+		for (i = 0; i < shapes.length; i++) {
+			var shape = shapes[i];
+			shape.homeY = shape.homeYy;
+			shape.homeX = shape.homeXx;
+			shape.y = shape.homeY;
+			shape.x = shape.homeX;
+		}
+		exportRoot.too.p33p34.alpha=1;
+		p1_Box=[];p2_Box=[];p3_Box=[];
+		shapeMove=true;
+
+		exportRoot.play();
+	})
+
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		createjs.Ticker.setFPS(lib.properties.fps);
+		createjs.Ticker.addEventListener("tick", stage);
+	}
+
+	fnStartAnimation();
+}
+function setShapes() {
+	var i,shape;
+	var l = shapes.length;
+
+	for (i = 0; i < l; i++) {
+		shape = shapes[i];
+		shape.key=i;
+
+		shape.homeY = shape.y;
+		shape.homeX = shape.x;
+		shape.homeYy = shape.y;
+		shape.homeXx = shape.x;
+		shape.y = shape.homeY;
+		shape.x = shape.homeX;
+
+		(function (num){
+			shape.addEventListener("mousedown",function(e){
+				if(!shapeMove){
+					return
+				}
+				startDrag(num)
+			});
+		})(i);
+
+	}
+}
+
+function startDrag(num) {
+	var shape = shapes[num];
+
+	stage.setChildIndex(shape, stage.getNumChildren() - 1);
+	stage.addEventListener('stagemousemove', function(e) {
+		shape.x = stage.mouseX;
+		shape.y = stage.mouseY;
+	});
+	stage.addEventListener('stagemouseup', function(e) {
+		stage.removeAllEventListeners();
+		if(shape.x-19<P1X+P1W && shape.x+19>P1X-P1W && shape.y-19<P1Y+P1H &&shape.y+19>P1Y){
+//			console.log('进入1')
+			deleteEqual(shape.key)
+			p1_Box.push(shape.key);
+
+			createjs.Tween.get(shape).to({
+				x: stage.mouseX,
+				y:P1Y+P1H+3-19
+			}, 200, createjs.Ease.quadOut).call(function(){
+				shape.homeY = shape.y;
+				shape.homeX = shape.x;
+				shape.y = shape.homeY;
+				shape.x = shape.homeX;
+			});
+
+		}else if(shape.x-19<P2X+P2W && shape.x+19>P2X-P2W && shape.y-19<P2Y+P2H &&shape.y+19>P2Y){
+//			console.log('进入2')
+			deleteEqual(shape.key)
+			p2_Box.push(shape.key)
+
+			createjs.Tween.get(shape).to({
+				x: stage.mouseX,
+				y:P2Y+P2H+3-19
+			}, 200, createjs.Ease.quadOut).call(function(){
+				shape.homeY = shape.y;
+				shape.homeX = shape.x;
+				shape.y = shape.homeY;
+				shape.x = shape.homeX;
+			});
+		}else if(shape.x-19<P3X+P3W && shape.x+19>P3X-P3W && shape.y-19<P3Y+P3H &&shape.y+19>P3Y){
+//			console.log('进入3')
+			deleteEqual(shape.key)
+			p3_Box.push(shape.key)
+
+			createjs.Tween.get(shape).to({
+				x: stage.mouseX,
+				y:P3Y+P3H+3-19
+			}, 200, createjs.Ease.quadOut).call(function(){
+				shape.homeY = shape.y;
+				shape.homeX = shape.x;
+				shape.y = shape.homeY;
+				shape.x = shape.homeX;
+			});
+		}
+		else{
+			createjs.Tween.get(shape).to({
+				x: shape.homeX,
+				y: shape.homeY
+			}, 200, createjs.Ease.quadOut);
+		}
+
+		checkGame();
+
+	});
+}
+
+function checkGame(){
+	if(p1_Box.length>0 &&p2_Box.length>0 &&p3_Box.length>0 &&p1_Box.length<=2 &&p2_Box.length<=2 &&p3_Box.length<=2 &&(p1_Box.length+p2_Box.length+p3_Box.length)==4){
+		shapeMove=false;
+		value1=p1_Box.length;
+		value2=p2_Box.length;
+		value3=p3_Box.length;
+		exportRoot.gotoAndPlay(1);
+
+		ipt1.style.display='block';
+		ipt1.disabled=false;
+		ipt1.focus();
+
+	}
+
+}
+
+function deleteEqual(key){
+	if(p1_Box.indexOf(key)>-1){
+		p1_Box.remove(key)
+	}
+	if(p2_Box.indexOf(key)>-1){
+		p2_Box.remove(key)
+	}
+	if(p3_Box.indexOf(key)>-1){
+		p3_Box.remove(key)
+	}
+}
+
+Array.prototype.indexOf = function(val) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == val) return i;
+	}
+	return -1;
+};
+Array.prototype.remove = function(val) {
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
+};
+
+window.onload=function(){
+	init();
+
+}
+
+</script>
+<!-- write your code here -->
+</head>
+<body style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:550px; height:520px">
+		<canvas id="canvas" width="550" height="520" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+		<input id="ipt1" style="position: absolute;top: 203px;left: 207px;" type="text" maxlength="1" disabled>
+		<input id="ipt2" style="position: absolute;top: 203px;left: 263px;" type="text" maxlength="1" disabled>
+		<input id="ipt3" style="position: absolute;top: 203px;left: 318px;" type="text" maxlength="1" disabled>
+		<input id="ipt4" style="position: absolute;top: 248px;left: 207px;" type="text" maxlength="1" disabled>
+		<input id="ipt5" style="position: absolute;top: 248px;left: 263px;" type="text" maxlength="1" disabled>
+		<input id="ipt6" style="position: absolute;top: 248px;left: 318px;" type="text" maxlength="1" disabled>
+		<input id="ipt7" style="position: absolute;top: 364px;left: 210px;" type="text" maxlength="1" disabled>
+		<input id="ipt8" style="position: absolute;top: 364px;left: 313px;" type="text" maxlength="1" disabled>
+		<input id="ipt9" style="position: absolute;top: 442px;left: 180px;" type="text" maxlength="1" disabled>
+		<input id="ipt10" style="position: absolute;top: 442px;left: 237px;" type="text" maxlength="1" disabled>
+		<input id="ipt11" style="position: absolute;top: 442px;left: 283px;" type="text" maxlength="1" disabled>
+		<input id="ipt12" style="position: absolute;top: 442px;left: 344px;" type="text" maxlength="1" disabled>
+		<input id="ipt13" style="position: absolute;top: 481px;left: 157px;" type="text" maxlength="1" disabled>
+		<input id="ipt14" style="position: absolute;top: 481px;left: 216px;" type="text" maxlength="1" disabled>
+		<input id="ipt15" style="position: absolute;top: 481px;left: 279px;" type="text" maxlength="1" disabled>
+		<input id="ipt16" style="position: absolute;top: 481px;left: 335px;" type="text" maxlength="1" disabled>
+		<input id="ipt17" style="position: absolute;top: 481px;left: 389px;" type="text" maxlength="1" disabled>
+
+
+	</div>
+</body>
+</html>

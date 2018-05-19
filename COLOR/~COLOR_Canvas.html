@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>~COLOR_Canvas</title>
+	<style>
+		input[disabled]{opacity:1;background: #fff}
+	</style>
+<!-- write your code here -->
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="~COLOR_Canvas.js"></script>
+<script>
+var canvas, stage, exportRoot,fnStartAnimation,redBox,yellowBox,color1,color2,color3,color4,strokeColor="",date={};
+var colorArr=["","","",""],rightValue="",onepartValue="",twopartValue="";
+
+
+function init() {
+	canvas = document.getElementById("canvas");
+
+	handleComplete();
+}
+function handleComplete() {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	exportRoot = new lib.COLOR_Canvas();
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.enableMouseOver(50);
+
+	exportRoot.xiguan.alpha=0;
+	exportRoot.pentong.alpha=0;
+
+	color1=exportRoot.color1;
+	color2=exportRoot.color2;
+	color3=exportRoot.color3;
+	color4=exportRoot.color4;
+	redBox=exportRoot.instance_45;
+	yellowBox=exportRoot.instance_43;
+
+	exportRoot.xiguan.homeX=exportRoot.xiguan.x;
+	exportRoot.xiguan.homeY=exportRoot.xiguan.y;
+	exportRoot.pentong.homeX=exportRoot.pentong.x;
+	exportRoot.pentong.homeY=exportRoot.pentong.y;
+
+	stage.addEventListener('stagemousemove',function(){
+		if(!date.type){
+			return
+		}
+		var ptRed = redBox.globalToLocal(stage.mouseX, stage.mouseY);
+		var ptYellow = yellowBox.globalToLocal(stage.mouseX, stage.mouseY);
+		var ptColor1 = color1.globalToLocal(stage.mouseX, stage.mouseY);
+		var ptColor2 = color2.globalToLocal(stage.mouseX, stage.mouseY);
+		var ptColor3 = color3.globalToLocal(stage.mouseX, stage.mouseY);
+		var ptColor4 = color4.globalToLocal(stage.mouseX, stage.mouseY);
+		if (redBox.hitTest(ptRed.x, ptRed.y)){
+
+			redBox.cursor="none";
+			exportRoot.xiguan.alpha=1;
+			exportRoot.xiguan.x=stage.mouseX;
+			exportRoot.xiguan.y=stage.mouseY;
+		}
+		else if(yellowBox.hitTest(ptYellow.x, ptYellow.y)){
+
+			yellowBox.cursor="none";
+			exportRoot.xiguan.alpha=1;
+			exportRoot.xiguan.x=stage.mouseX;
+			exportRoot.xiguan.y=stage.mouseY;
+		}
+		else if(color1.hitTest(ptColor1.x, ptColor1.y)||color2.hitTest(ptColor2.x, ptColor2.y)||color3.hitTest(ptColor3.x, ptColor3.y)||color4.hitTest(ptColor4.x, ptColor4.y)){
+
+			exportRoot.instance_41.cursor="none";
+			exportRoot.instance_39.cursor="none";
+			exportRoot.instance_37.cursor="none";
+			exportRoot.instance_35.cursor="none";
+			exportRoot.pentong.alpha=1;
+			exportRoot.pentong.x=stage.mouseX;
+			exportRoot.pentong.y=stage.mouseY;
+		}
+		else{
+			exportRoot.xiguan.alpha=0;
+			exportRoot.xiguan.x=exportRoot.xiguan.homeX;
+			exportRoot.xiguan.y=exportRoot.xiguan.homeY;
+			exportRoot.pentong.alpha=0;
+			exportRoot.pentong.x=exportRoot.pentong.homeX;
+			exportRoot.pentong.y=exportRoot.pentong.homeY;
+		}
+	});
+
+	/*----------------------------------  the color in sucker  --------------*/
+	redBox.addEventListener('click',function(){
+		strokeColor='red'
+	});
+	yellowBox.addEventListener('click',function(){
+		strokeColor='yellow'
+	});
+//--------------------------------- apple  add  color  -------------
+	exportRoot.instance_35.addEventListener('click',function(){
+		if(strokeColor!=""){
+			if(strokeColor=='red'){
+				exportRoot.color1.instance.shape_1.graphics.f("#FF0000").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}else{
+				exportRoot.color1.instance.shape_1.graphics.f("#FFFF00").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}
+			colorArr[0]=strokeColor;
+		}
+	})
+	exportRoot.instance_37.addEventListener('click',function(){
+		if(strokeColor!=""){
+			if(strokeColor=='red'){
+				exportRoot.color3.instance.shape_1.graphics.f("#FF0000").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}else{
+				exportRoot.color3.instance.shape_1.graphics.f("#FFFF00").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}
+			colorArr[2]=strokeColor;
+		}
+	})
+	exportRoot.instance_39.addEventListener('click',function(){
+		if(strokeColor!=""){
+			if(strokeColor=='red'){
+				exportRoot.color2.instance.shape_1.graphics.f("#FF0000").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}else{
+				exportRoot.color2.instance.shape_1.graphics.f("#FFFF00").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}
+			colorArr[1]=strokeColor;
+		}
+	})
+	exportRoot.instance_41.addEventListener('click',function(){
+		if(strokeColor!=""){
+			if(strokeColor=='red'){
+				exportRoot.color4.instance.shape_1.graphics.f("#FF0000").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}else{
+				exportRoot.color4.instance.shape_1.graphics.f("#FFFF00").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+			}
+			colorArr[3]=strokeColor;
+		}
+	})
+	var Ipt1=document.getElementById('ipt01');
+	var Ipt2=document.getElementById('ipt02');
+	var Ipt3=document.getElementById('ipt03');
+	var Ipt4=document.getElementById('ipt04');
+	var Ipt5=document.getElementById('ipt05');
+	var Ipt6=document.getElementById('ipt06');
+	var Ipt7=document.getElementById('ipt07');
+	var Ipt8=document.getElementById('ipt08');
+	var Ipt9=document.getElementById('ipt09');
+	var Ipt10=document.getElementById('ipt10');
+	var Ipt11=document.getElementById('ipt11');
+	var Ipt12=document.getElementById('ipt12');
+	//---------------------------------- part one 提交按钮 ---------------------------
+	exportRoot.instance_33.addEventListener('click',function(){
+
+		if( kongValue()){
+			return
+		}
+		var final=alikeValue();
+		rightValue=final;
+		onepartValue=final['red'].toString()+final['yellow'];
+//		console.log(onepartValue);
+		if(final['red']==4||final['yellow']==4){
+			return
+		}
+
+		exportRoot.gotoAndPlay(1);
+		Ipt1.disabled=false;
+		Ipt1.style.display='block';
+		Ipt1.focus();
+		console.log(colorArr)
+	});
+	//---------------------------------- part two 提交按钮 ---------------------------
+	exportRoot.instance_34.addEventListener('click',function(){
+		if( kongValue()){
+			return
+		}
+		var final=alikeValue();
+		rightValue=final;
+		twopartValue=final['red'];
+		if(final['red']==4||final['yellow']==4){
+			return
+		}
+		if(onepartValue.indexOf(twopartValue)>-1){
+			return
+		}
+
+		exportRoot.gotoAndPlay(66);
+		Ipt9.disabled=false;
+		Ipt9.style.display='block';
+		Ipt9.focus();
+
+	})
+
+//--------------------------------------------输入框测试
+
+	Ipt1.onkeyup=function(event){
+		if(event.keyCode=='13'){
+			checkAnswer(Ipt1)
+		}
+	}
+	Ipt1.onblur=function(event){
+		checkAnswer(Ipt1)
+	}
+	Ipt2.onkeyup=function(event){
+		if(event.keyCode=='13'){
+			checkAnswer(Ipt2)
+		}
+	}
+	Ipt2.onblur=function(event){
+		checkAnswer(Ipt2)
+	}
+	Ipt9.onkeyup=function(event){
+		if(event.keyCode=='13'){
+			checkAnswer(Ipt9)
+		}
+	}
+	Ipt9.onblur=function(event){
+		checkAnswer(Ipt9)
+	}
+	Ipt10.onkeyup=function(event){
+		if(event.keyCode=='13'){
+			checkAnswer(Ipt10)
+		}
+	}
+	Ipt10.onblur=function(event){
+		checkAnswer(Ipt10)
+	}
+	Ipt11.onkeyup=function(event){
+		if(event.keyCode=='13'){
+			checkAnswer(Ipt11)
+		}
+	}
+	Ipt11.onblur=function(event){
+		checkAnswer(Ipt11)
+	}
+	Ipt12.onkeyup=function(event){
+		if(event.keyCode=='13'){
+			checkAnswer(Ipt12)
+		}
+	}
+	Ipt12.onblur=function(event){
+		checkAnswer(Ipt12)
+	}
+	function checkAnswer(obj){
+		if(obj==Ipt1){
+			if(Ipt1.value==rightValue.red){
+				Ipt2.disabled=false;
+				Ipt2.style.display='block';
+				Ipt2.focus();
+				Ipt1.disabled=true;
+				Ipt1.blur();
+				exportRoot.gotoAndPlay(10);
+
+			}else{
+				Ipt1.value="";
+				Ipt1.focus();
+			}
+		}else if(obj==Ipt2){
+			if(Ipt2.value==rightValue.yellow){
+				Ipt2.disabled=true;
+				Ipt2.blur();
+				exportRoot.gotoAndPlay(20);
+
+			}else{
+				Ipt2.value="";
+				Ipt2.focus();
+			}
+
+		}else if(obj==Ipt9){
+			if(Ipt9.value==rightValue.red){
+				Ipt10.disabled=false;
+				Ipt10.style.display='block';
+				Ipt10.focus();
+				Ipt9.disabled=true;
+				Ipt9.blur();
+				exportRoot.gotoAndPlay(76);
+
+			}else{
+				Ipt9.value="";
+				Ipt9.focus();
+			}
+		}else if(obj==Ipt10){
+			if(Ipt10.value==rightValue.yellow){
+				Ipt10.disabled=true;
+				Ipt10.blur();
+				exportRoot.gotoAndPlay(85);
+				Ipt11.style.display='block';
+				Ipt11.disabled=false;
+				Ipt11.focus();
+			}else{
+				Ipt10.value="";
+				Ipt10.focus();
+			}
+		}else if(obj==Ipt11){
+			if(Ipt11.value==rightValue.red){
+				Ipt11.disabled=true;
+				Ipt11.blur();
+				Ipt12.style.display='block';
+				Ipt12.disabled=false;
+				Ipt12.focus();
+			}else{
+				Ipt11.value="";
+				Ipt11.focus();
+			}
+		}else if(obj==Ipt12){
+			if(Ipt12.value==rightValue.yellow){
+				Ipt12.disabled=true;
+				Ipt12.blur();
+				exportRoot.gotoAndPlay(101);
+				Ipt11.style.top='245px';
+				Ipt12.style.top='245px';
+
+			}else{
+				Ipt12.value="";
+				Ipt12.focus();
+			}
+		}
+
+	}
+	exportRoot.addEventListener('changePosition',function(){
+		Ipt1.style.display='none';
+		Ipt2.style.display='none';
+		Ipt3.style.display='none';
+		Ipt4.style.display='none';
+		Ipt5.style.display='block';
+		Ipt6.style.display='block';
+		Ipt7.style.display='block';
+		Ipt8.style.display='block';
+
+		Ipt5.value=Ipt1.value;
+		Ipt6.value=Ipt2.value;
+		Ipt7.value=Ipt1.value;
+		Ipt8.value=Ipt2.value;
+		Ipt1.value="";
+		Ipt2.value="";
+		Ipt3.value="";
+		Ipt4.value="";
+
+	});
+	exportRoot.addEventListener('equationShow',function(){
+
+		Ipt3.style.display='block';
+		Ipt4.style.display='block';
+
+		Ipt3.value=Ipt1.value;
+		Ipt4.value=Ipt2.value;
+	});
+
+	exportRoot.addEventListener('partoneOver',function(){
+		styleInit()
+	})
+
+	exportRoot.instance.addEventListener('click',function(){
+		styleInit();
+
+		for(var i=5;i<13;i++){
+			if(i<10){
+				i='0'+i
+			}
+			document.getElementById('ipt'+i).style.display='none';
+			document.getElementById('ipt'+i).value="";
+		}
+		Ipt11.style.top='255px';
+		Ipt12.style.top='255px';
+		exportRoot.play();
+
+	})
+
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		createjs.Ticker.setFPS(lib.properties.fps);
+		createjs.Ticker.addEventListener("tick", stage);
+	}
+
+	fnStartAnimation();
+}
+
+function styleInit(){
+	strokeColor="";
+	colorArr=["","","",""];
+	rightValue="";
+	exportRoot.color1.instance.shape_1.graphics.f("#FFFFFF").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+	exportRoot.color2.instance.shape_1.graphics.f("#FFFFFF").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+	exportRoot.color3.instance.shape_1.graphics.f("#FFFFFF").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+	exportRoot.color4.instance.shape_1.graphics.f("#FFFFFF").s().p("AjOCzQhWhMAAhqQAAhsBWhMQBQhHB+A+IABAAIgBAFIgHAVIABACIAFgHIAFgIIAIgQQBugvBTBDQBXBGABBrQACBphWBMQhNBEiGgiQgqANgmAAQhHAAg1gvg");
+
+}
+function kongValue(){
+	for(var i=0;i<colorArr.length;i++){
+		if(colorArr[i]==""){
+			return true;
+		}
+	}
+	return false;
+}
+function alikeValue(){
+	var map = {};
+	for(var i=0;i<colorArr.length;i++){
+		var ai = colorArr[i];
+		if(!map[ai]){
+			map[ai] = 1;
+		}else{
+			map[ai]++;
+		}
+	}
+	return map;
+}
+	window.onload=function(){
+		init();
+	}
+</script>
+<!-- write your code here -->
+</head>
+<body  style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:550px; height:300px;position: relative;">
+		<canvas id="canvas" width="550" height="300" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+		<input id="ipt01" style="position: absolute;top: 190px;left: 224px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt02" style="position: absolute;top: 190px;left: 300px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt03" style="position: absolute;top: 245px;left: 224px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt04" style="position: absolute;top: 245px;left: 300px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt05" style="position: absolute;top: 190px;left: 70px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt06" style="position: absolute;top: 190px;left: 138px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt07" style="position: absolute;top: 245px;left: 70px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt08" style="position: absolute;top: 245px;left: 138px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt09" style="position: absolute;top: 190px;left: 323px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt10" style="position: absolute;top: 190px;left: 399px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt11" style="position: absolute;top: 255px;left: 323px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+		<input id="ipt12" style="position: absolute;top: 255px;left: 399px;width: 25px;height: 25px;border: none;font-size: 25px;text-align: center;outline: none;display: none" type="text" maxlength="1" disabled>
+
+	</div>
+</body>
+</html>
