@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>~DRAWLINE_Canvas</title>
+<!-- write your code here -->
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="~DRAWLINE_Canvas.js"></script>
+<script>
+var canvas, stage, exportRoot,fnStartAnimation,myline;
+//---------------另x=0，求出y0
+var  line_slope= 1,y0= 2,add= 2,equation1="y=x+2";
+
+function init() {
+	canvas = document.getElementById("canvas");
+	handleComplete();
+}
+function handleComplete() {
+	exportRoot = new lib.DRAWLINE_Canvas();
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	createjs.Touch.enable(stage);
+	stage.enableMouseOver();
+
+	shapes=[exportRoot.start,exportRoot.end];
+	exportRoot.start.NumRoundX=4;
+	exportRoot.start.NumRoundY=-6;
+	exportRoot.end.NumRoundX=6;
+	exportRoot.end.NumRoundY=-6;
+	exportRoot.text.text=equation1;
+ 	myline=exportRoot.myline;
+	myline.alpha=0;
+	myline.x=11*20;
+	myline.y=11*20-y0*20;
+	//--------先求出弧度---再换算成角度
+	var line_angle=Math.atan(line_slope)*180/Math.PI;
+	//console.log(line_angle);
+	if(line_slope>0){
+		myline.rotation=-line_angle;
+	}else{
+		myline.rotation=line_angle;
+	}
+
+	setShapes();
+	fnStartAnimation = function() {
+		createjs.Ticker.setFPS(lib.properties.fps);
+		createjs.Ticker.addEventListener("tick", stage);
+	};
+	fnStartAnimation();
+}
+function setShapes() {
+	var i,shape;
+	var l = shapes.length;
+
+	for (i = 0; i < l; i++) {
+		shape = shapes[i];
+		shape.key=i;
+		shape.homeY = shape.y;
+		shape.homeX = shape.x;
+		shape.y = shape.homeY;
+		shape.x = shape.homeX;
+
+		(function (num){
+			shape.addEventListener("mousedown",function(e){
+				startDrag(num)
+			});
+		})(i);
+
+	}
+}
+function startDrag(num) {
+	var shape = shapes[num];
+	stage.setChildIndex(shape, stage.getNumChildren() - 1);
+	stage.addEventListener('stagemousemove', function(e) {
+		line_show(shape);
+	});
+	stage.addEventListener('stagemouseup', function(e) {
+		stage.removeAllEventListeners();
+		line_show(shape);
+	});
+}
+
+function line_show(shape){
+	shape.x = stage.mouseX;
+	shape.y = stage.mouseY;
+	var NumRoundX=(stage.mouseX/20)-11;
+	var NumRoundY=11-(stage.mouseY/20);
+	shape.NumRoundX=NumRoundX;
+	shape.NumRoundY=NumRoundY;
+	if(((exportRoot.start.NumRoundY-exportRoot.start.NumRoundX)<=(add+0.3)&&(exportRoot.start.NumRoundY-exportRoot.start.NumRoundX)>=(add-0.3)) &&((exportRoot.end.NumRoundY-exportRoot.end.NumRoundX)<=(add+0.3)&&(exportRoot.end.NumRoundY-exportRoot.end.NumRoundX)>=(add-0.3)) ){
+		myline.alpha=1;
+	}else{
+		myline.alpha=0;
+	}
+}
+
+window.onload=function(){
+	init();
+}
+</script>
+<!-- write your code here -->
+</head>
+<body onload="init();" style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:440px; height:440px">
+		<canvas id="canvas" width="440" height="440" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+	</div>
+</body>
+</html>
